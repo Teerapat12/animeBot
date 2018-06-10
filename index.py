@@ -1,6 +1,8 @@
 import os
 import importlib
 import threading
+import time
+
 
 # Init
 d = 'sitesAdapter'
@@ -26,4 +28,7 @@ def startChecking():
   threading.Timer(10.0, checkUpdate).start()
   print("Checking")
 
-startChecking()
+
+while True:
+    checkUpdate()
+    time.sleep(180)
