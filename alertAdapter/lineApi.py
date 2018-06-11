@@ -9,3 +9,12 @@ msg = 'ทดสอบภาษาไทย'
 def sendMessage(msg):
     r = requests.post(url, headers=headers, data={'message': msg})
     return True
+
+
+def sendImg(msg,img):
+    r = requests.post(url, headers=headers, data={'message': msg,'imageFullsize':img,'imageThumbnail':img})
+    return True
+
+def sendEpisode(ep):
+    sendImg(ep.name + " episode " + ep.ep + " has arrived on "+ ep.webName, ep.img)
+    sendMessage(ep.url + ep.link)

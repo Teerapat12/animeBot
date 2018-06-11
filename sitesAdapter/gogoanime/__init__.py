@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup as soup
 
 # Path hack.
 import sys, os
-sys.path.append("D:/ProjectFolder/chatbot/alertAdapter")
+sys.path.append("D:/ProjectFolder/akerchatbot/alertAdapter")
 import lineApi
 
 
@@ -20,11 +20,13 @@ class Anime(): # Storing the anime data
         self.link = link # Link
 
 class Episode():
-    def __init__(self, name, ep, link):  # Intialises the anime class
+    def __init__(self, name, ep, link, img):  # Intialises the anime class
         self.name = name  # Title
         self.ep = ep  # Episode
         self.link = link # Link
-        #self.at =
+        self.url = "http://www3.gogoanime.tv"
+        self.webName = "Gogoanime"
+        self.img = img
 
 
 class adapter():
@@ -53,14 +55,17 @@ class adapter():
             name = details[0].text.replace(u'\ufeff', '')
             episode = details[1].text.replace(u'\ufeff', '').split(" ")[1]
             link = details[0].a['href']
-            ep = Episode(name, episode, link)
+            img = anime.find('img')['src']
+
+            ep = Episode(name, episode, link, img)
 
             if any(ep.name == e.name and ep.ep == e.ep for e in self.epList):
                 pass
             else:
                 #if ep.name in self.favList: # Uncomment if only want to the notification of fav anime
-                lineApi.sendMessage(ep.name+" episode "+ep.ep+" has arrived on Gogoanime")
-                lineApi.sendMessage(url+ep.link)
+                #lineApi.sendMessage(ep.name+" episode "+ep.ep+" has arrived on Gogoanime")
+                #lineApi.sendMessage(url+ep.link)
+                lineApi.sendEpisode(ep)
 
                 if any(ep.name == e.name for e in self.epList): # Already has the anime but different episode
                     self.epList = [e for e in self.epList if e.name != ep.name] # Remove the old one first then add the new one
