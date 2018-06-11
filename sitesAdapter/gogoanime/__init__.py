@@ -63,8 +63,6 @@ class adapter():
                 pass
             else:
                 #if ep.name in self.favList: # Uncomment if only want to the notification of fav anime
-                #lineApi.sendMessage(ep.name+" episode "+ep.ep+" has arrived on Gogoanime")
-                #lineApi.sendMessage(url+ep.link)
                 lineApi.sendEpisode(ep)
 
                 if any(ep.name == e.name for e in self.epList): # Already has the anime but different episode
