@@ -28,7 +28,6 @@ def sendImg(msg,img):
 
 
 def sendEpisode(ep):
-    print("HEY")
     sendImg(ep.name + " episode " + ep.ep + " has arrived on " + ep.webName, ep.img)
     sendMessage(ep.url + ep.link)
     #sendData({"type":"flex","altText":strMsg,"contents":flexMsg},{"type":"text","text":ep.url+ep.link})
