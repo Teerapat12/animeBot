@@ -2,7 +2,7 @@ import os
 import importlib
 import threading
 import time
-
+from alertAdapter import lineApi
 
 # Init
 d = 'sitesAdapter'
@@ -13,14 +13,28 @@ modules = map(importlib.import_module, moduleNames)
 
 adapters = [m.adapter() for m in modules]
 
+oldEpList = []
+def oldEpisodeList():
+  return oldEpList # None for now. 
+
+def isNewEpisode(episode,oldEpList):
+  return any(episode.name == e.name and episode.ep == e.ep for e in oldEpList)
+
+def handleNewEpisode(episode):
+  lineApi.sendEpisode(episode)
+  oldEpList.append(ep)
+
 # Should check for update every n minutes
 def checkUpdate():
-    episodes = adapters[0].getNewest()
     # Step 1 call all the .getNewest(n) and getall the names of the movies.
-
-    # Step 2 Check if the newest if newer than the old one.
+    episodes = adapters[0].getNewest()
+    # Step 2 Get the list of episode that the bot already told us.
+    oldEpList = oldEpisodeList()
+    # Step 3 Check if the newest if newer than the old one.
+    for episode in episode:
+        if isNewEpisode(episode,oldEpList):
+            handleNewEpisode(episode) 
     
-    # Step 3 If it is, call the alertUser() function.
 
 
 def startChecking():
