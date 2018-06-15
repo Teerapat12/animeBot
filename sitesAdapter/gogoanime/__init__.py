@@ -54,11 +54,11 @@ class adapter():
         return episodeList  # Return the array of animes
     
     def extractEpisode(self,animeText):
-        details = anime.findAll('p')
+        details = animeText.findAll('p')
         name = details[0].text.replace(u'\ufeff', '')
         episode = details[1].text.replace(u'\ufeff', '').split(" ")[1]
         link = details[0].a['href']
-        img = anime.find('img')['src']
+        img = animeText.find('img')['src']
 
         return Episode(name, episode, link, img)
 
