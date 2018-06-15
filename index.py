@@ -22,7 +22,7 @@ def isNewEpisode(episode,oldEpList):
 
 def handleNewEpisode(episode):
   lineApi.sendEpisode(episode)
-  oldEpList.append(ep)
+  oldEpList.append(episode)
 
 # Should check for update every n minutes
 def checkUpdate():
