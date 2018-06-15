@@ -35,40 +35,37 @@ class adapter():
         self.name = "gogoanime"
         self.epList = epList
         self.favList = favList
-
-    def getNewest(self, n=10):
-        url = "http://www3.gogoanime.tv"  # Looks for the newest anime
-
+        self.url = "http://www3.gogoanime.tv"  # Looks for the newest anime
+        
+    def crawlSite():
         request = Request(url, headers={
             'User-Agent': 'Mozilla/5.0'})  # Requests the page using a false header because scraping 403's
         client = urlopen(request)  # Opens a connection to the page
         html = client.read()  # Reads the html and stores it as html
         client.close()  # Closes connection to save memory
+        return html
+
+    def getNewest(self, n=10):
+        html = self.crawlSite()
 
         page_soup = soup(html, "html.parser")  # Uses soup to parse the html data
         animes = page_soup.find("ul", {"class": "items"}).find_all("li")  # Finds the animes
 
-        aAnimes = []  # Placeholder for the array of animes
+        episodeList = []  # Placeholder for the array of animes
 
         for anime in animes:  # For every anime found
-            details = anime.findAll('p')
-            name = details[0].text.replace(u'\ufeff', '')
-            episode = details[1].text.replace(u'\ufeff', '').split(" ")[1]
-            link = details[0].a['href']
-            img = anime.find('img')['src']
+            ep = extractEpisode(anime)
+            episodeList.append(ep)
+            
+        return episodeList  # Return the array of animes
+    
+    def extractEpisode(animeText):
+        details = anime.findAll('p')
+        name = details[0].text.replace(u'\ufeff', '')
+        episode = details[1].text.replace(u'\ufeff', '').split(" ")[1]
+        link = details[0].a['href']
+        img = anime.find('img')['src']
 
-            ep = Episode(name, episode, link, img)
-
-            if any(ep.name == e.name and ep.ep == e.ep for e in self.epList):
-                pass
-            else:
-                #if ep.name in self.favList: # Uncomment if only want to the notification of fav anime
-                lineApi.sendEpisode(ep)
-
-                if any(ep.name == e.name for e in self.epList): # Already has the anime but different episode
-                    self.epList = [e for e in self.epList if e.name != ep.name] # Remove the old one first then add the new one
-                self.epList.append(ep)
-
-        return self.epList  # Return the array of animes
+        return Episode(name, episode, link, img)
 
 
