@@ -31,7 +31,7 @@ def checkUpdate():
     # Step 2 Get the list of episode that the bot already told us.
     oldEpList = oldEpisodeList()
     # Step 3 Check if the newest if newer than the old one.
-    for episode in episode:
+    for episode in episodes:
         if isNewEpisode(episode,oldEpList):
             handleNewEpisode(episode) 
     
