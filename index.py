@@ -18,7 +18,7 @@ def oldEpisodeList():
   return oldEpList # None for now. 
 
 def isNewEpisode(episode,oldEpList):
-  return any(episode.name == e.name and episode.ep == e.ep for e in oldEpList)
+  return not any(episode.name == e.name and episode.ep == e.ep for e in oldEpList)
 
 def handleNewEpisode(episode):
   lineApi.sendEpisode(episode)
