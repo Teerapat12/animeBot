@@ -6,12 +6,6 @@
 from  urllib.request import Request,urlopen
 from bs4 import BeautifulSoup as soup
 
-# Path hack.
-import sys, os
-sys.path.append("D:/ProjectFolder/akerchatbot/alertAdapter")
-import lineApi
-
-
 class Anime(): # Storing the anime data
 
     def __init__(self,title,link): # Intialises the anime class
