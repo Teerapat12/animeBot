@@ -48,7 +48,7 @@ class adapter():
         episodeList = []  # Placeholder for the array of animes
 
         for anime in animes:  # For every anime found
-            ep = extractEpisode(anime)
+            ep = self.extractEpisode(anime)
             episodeList.append(ep)
             
         return episodeList  # Return the array of animes
