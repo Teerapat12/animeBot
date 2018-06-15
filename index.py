@@ -15,12 +15,11 @@ adapters = [m.adapter() for m in modules]
 
 # Should check for update every n minutes
 def checkUpdate():
-    adapters[0].getNewest()
+    episodes = adapters[0].getNewest()
     # Step 1 call all the .getNewest(n) and getall the names of the movies.
 
-
-
     # Step 2 Check if the newest if newer than the old one.
+    
     # Step 3 If it is, call the alertUser() function.
 
 
