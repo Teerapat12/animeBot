@@ -32,7 +32,6 @@ def checkUpdate():
     oldEpList = oldEpisodeList()
     # Step 3 Check if the newest if newer than the old one.
     for episode in episodes:
-        print(episode.name)
         if isNewEpisode(episode,oldEpList):
             handleNewEpisode(episode) 
     
