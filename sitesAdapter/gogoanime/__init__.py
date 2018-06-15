@@ -53,7 +53,7 @@ class adapter():
             
         return episodeList  # Return the array of animes
     
-    def extractEpisode(animeText):
+    def extractEpisode(self.animeText):
         details = anime.findAll('p')
         name = details[0].text.replace(u'\ufeff', '')
         episode = details[1].text.replace(u'\ufeff', '').split(" ")[1]
