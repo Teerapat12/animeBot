@@ -32,7 +32,7 @@ class adapter():
         self.url = "http://www3.gogoanime.tv"  # Looks for the newest anime
         
     def crawlSite(self):
-        request = Request(url, headers={
+        request = Request(self.url, headers={
             'User-Agent': 'Mozilla/5.0'})  # Requests the page using a false header because scraping 403's
         client = urlopen(request)  # Opens a connection to the page
         html = client.read()  # Reads the html and stores it as html
