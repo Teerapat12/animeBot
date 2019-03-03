@@ -18,4 +18,5 @@ But feel free to fork and change the APP_ID to your ID and it would work normall
 1. Send notification to everyone that added alert bot.
 2. Able to tell which anime user want to filter in/out by typing to the bot.
 3. Add extraction from another sites, expanding episodes that can alert.
+4. Reorder the showing anime. Now when there are many anime at once it order from least recent. Should be the other way round
 
