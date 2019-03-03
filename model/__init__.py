@@ -6,3 +6,9 @@ class Episode:
         self.url = "http://www3.gogoanime.tv"
         self.webName = "Gogoanime"
         self.img = img
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.name == other.name and self.ep == other.ep
+        else:
+            return False

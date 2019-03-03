@@ -7,8 +7,8 @@ class HistoryManager:
     def addEpisodeToHistory(self, episode):
         self.repository.saveHistory(episode)
 
-        def loadHistory(self):
-            return self.repository.loadHistory()
+    def loadHistory(self):
+        return self.repository.loadHistory()
 
 class FileRepository:
     def __init__(self, file_path):
@@ -25,7 +25,7 @@ class FileRepository:
             with open(self.file_path, 'rb') as handle:
                 self.episodes = pickle.load(handle)
                 return self.episodes
-        except:
-            print("Error. Either no history or error. I'm too lazy to make check for now.")
+        except Exception as e:
+            # There might be bug if other occur beside no file error occur. But I'm too lazy so feel free to open PR. :)
             self.episodes = []
             return self.episodes
