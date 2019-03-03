@@ -1,35 +1,23 @@
-# Coded by TheSpaceCowboy
-# Date: 24/11/17
-# Github: https://github.com/thespacecowboy42534
-
 #Imports
 from  urllib.request import Request,urlopen
 from bs4 import BeautifulSoup as soup
+from model import Episode
 
-class Anime(): # Storing the anime data
-
-    def __init__(self,title,link): # Intialises the anime class
-        
-        self.title = title # Title
-        self.link = link # Link
-
-class Episode():
-    def __init__(self, name, ep, link, img):  # Intialises the anime class
-        self.name = name  # Title
-        self.ep = ep  # Episode
-        self.link = link # Link
-        self.url = "http://www3.gogoanime.tv"
-        self.webName = "Gogoanime"
-        self.img = img
-
-
+favListDefault = ["Boruto: Naruto Next Generations", "Steins;Gate 0", "Boku no Hero Academia", "Dorei-ku The Animation"]
 class adapter():
-
-    def __init__(self, epList = [],favList= ["Boruto: Naruto Next Generations","Steins;Gate 0","Boku no Hero Academia","Dorei-ku The Animation"]):
+    def __init__(self, epList = [], favList=None):
+        if favList is None:
+            favList = favListDefault
         self.name = "gogoanime"
         self.epList = epList
         self.favList = favList
         self.url = "http://www3.gogoanime.tv"  # Looks for the newest anime
+
+    def getNewest(self, n=10):
+        html = self.crawlSite()
+        episodeHtmls = self.extractEpisodesHtml(html)
+        episodeList = [self.extractEpisode(episodeHtml) for episodeHtml in episodeHtmls]
+        return episodeList  # Return the array of animes
         
     def crawlSite(self):
         request = Request(self.url, headers={
@@ -39,26 +27,17 @@ class adapter():
         client.close()  # Closes connection to save memory
         return html
 
-    def getNewest(self, n=10):
-        html = self.crawlSite()
-
+    def extractEpisodesHtml(self, html):
         page_soup = soup(html, "html.parser")  # Uses soup to parse the html data
-        animes = page_soup.find("ul", {"class": "items"}).find_all("li")  # Finds the animes
-
-        episodeList = []  # Placeholder for the array of animes
-
-        for anime in animes:  # For every anime found
-            ep = self.extractEpisode(anime)
-            episodeList.append(ep)
-            
-        return episodeList  # Return the array of animes
+        episodeHtml = page_soup.find("ul", {"class": "items"}).find_all("li")  # Finds the animes
+        return episodeHtml
     
-    def extractEpisode(self,animeText):
-        details = animeText.findAll('p')
+    def extractEpisode(self,episodeHtml):
+        details = episodeHtml.findAll('p')
         name = details[0].text.replace(u'\ufeff', '')
         episode = details[1].text.replace(u'\ufeff', '').split(" ")[1]
         link = details[0].a['href']
-        img = animeText.find('img')['src']
+        img = episodeHtml.find('img')['src']
 
         return Episode(name, episode, link, img)
 
