@@ -1,3 +1,6 @@
 .pytest_cache
 .idea
 *.txt
+*.pyc
+*__pycache*
+*cpython*
