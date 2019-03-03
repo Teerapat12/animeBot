@@ -34,12 +34,9 @@ def checkUpdate():
     # Step 3 Check if the newest if newer than the old one.
     for episode in episodes:
         if isNewEpisode(episode,oldEpList):
-            handleNewEpisode(episode) 
-
-def startChecking():
-  threading.Timer(10.0, checkUpdate).start()
-  print("Checking")
+            handleNewEpisode(episode)
 
 while True:
+    print("Start checking")
     checkUpdate()
     time.sleep(60)

@@ -28,12 +28,11 @@ def sendMessage(msg):
 def sendImg(msg,img):
     sendData([{'type':'text', 'text':msg},{'type':'image','originalContentUrl': img, 'previewImageUrl':img}])
 
-
+horiline = "="*50
 def sendEpisode(ep):
     sendImg(ep.name + " episode " + ep.ep + " has arrived on " + ep.webName, ep.img)
     sendMessage(ep.url + ep.link)
-    #sendData({"type":"flex","altText":strMsg,"contents":flexMsg},{"type":"text","text":ep.url+ep.link})
-
+    sendMessage(horiline)
 
 def ep2Str(ep):
     return ep.name+" episode " + str(ep.ep)
